@@ -1,4 +1,4 @@
-package com.ngondo.instagram.main.home.presentation;
+package com.ngondo.instagram.main.search.presentation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ngondo.instagram.R;
 
-public class HomeFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
-    public HomeFragment() {
+    public SearchFragment() {
     }
 
     @Nullable
@@ -26,9 +26,9 @@ public class HomeFragment extends Fragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState
     ) {
-        View view = inflater.inflate(R.layout.fragment_main_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_search, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.home_recycler);
+        RecyclerView recyclerView = view.findViewById(R.id.search_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(new PostAdapter());
 
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
 
         public PostViewHolder(@NonNull View itewView) {
             super(itewView);
-            imagePost = itemView.findViewById(R.id.profile_image_grid);
+            imagePost = itemView.findViewById(R.id.main_search_imageview_user);
         }
 
         public void bind(int image) {
@@ -76,11 +76,11 @@ public class HomeFragment extends Fragment {
         @NonNull
         @Override
         public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_post_list, parent, false));
+            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_user_list, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(@NonNull HomeFragment.PostViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull SearchFragment.PostViewHolder holder, int position) {
             holder.bind(images[position]);
         }
 
