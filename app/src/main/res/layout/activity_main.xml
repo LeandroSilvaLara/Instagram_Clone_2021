@@ -43,10 +43,10 @@
 
             <fragment
                 android:id="@+id/main_fragment"
-                android:name="com.ngondo.instagram.main.profile.presentation.ProfileFragment"
+                android:name="com.ngondo.instagram.main.home.presentation.HomeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:layout="@layout/fragment_main_profile" />
+                tools:layout="@layout/fragment_main_home" />
 
         </LinearLayout>
 

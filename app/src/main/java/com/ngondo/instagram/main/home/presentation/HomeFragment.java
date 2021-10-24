@@ -26,9 +26,9 @@ public class HomeFragment extends Fragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState
     ) {
-        View view = inflater.inflate(R.layout.fragment_main_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_home, container, false);
 
-        RecyclerView recyclerView = view.findViewById(R.id.profile_recycler);
+        RecyclerView recyclerView = view.findViewById(R.id.home_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.setAdapter(new PostAdapter());
 
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
         @NonNull
         @Override
         public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_profile_grid, parent, false));
+            return new PostViewHolder(getLayoutInflater().inflate(R.layout.item_profile_list, parent, false));
         }
 
         @Override
