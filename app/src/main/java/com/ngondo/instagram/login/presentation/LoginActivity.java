@@ -3,6 +3,8 @@ package com.ngondo.instagram.login.presentation;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,55 +15,113 @@ import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.ngondo.instagram.R;
+import com.ngondo.instagram.common.view.AbstractActivity;
 import com.ngondo.instagram.common.view.LoadingButton;
+import com.ngondo.instagram.main.presentation.MainActivity;
+import com.ngondo.instagram.register.presentation.RegisterActivity;
 
-public class LoginActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
-    private LoadingButton buttonEnter;
+public class LoginActivity extends AbstractActivity implements LoginView  {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    @BindView(R.id.login_edit_text_email)
+    EditText editTextEmail;
+    @BindView(R.id.login_edit_text_password)
+    EditText editTextPassword;
+    @BindView(R.id.login_edit_text_email_input)
+    TextInputLayout inputLayoutEmail;
+    @BindView(R.id.login_edit_text_password_input) TextInputLayout inputLayoutPassword;
+    @BindView(R.id.login_button_enter)
+    LoadingButton buttonEnter;
 
-        buttonEnter = findViewById(R.id.login_button_enter);
+    //LoginPresenter presenter;
 
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
-
-        EditText editTextEmail = findViewById(R.id.login_edit_text_email);
-        EditText editTextPassword = findViewById(R.id.login_edit_text_password);
-
-        editTextEmail.addTextChangedListener(watcher);
-        editTextPassword.addTextChangedListener(watcher);
-
-        buttonEnter.setOnClickListener(v -> {
-            buttonEnter.showProgress(true);
-
-            new Handler().postDelayed(() -> {
-                buttonEnter.showProgress(false);
-                TextInputLayout inputLayoutEmail = findViewById(R.id.login_edit_text_email_input);
-                inputLayoutEmail.setError("Endereço de e-mail inválido");
-                editTextEmail.setBackground(ContextCompat.getDrawable(this, R.drawable.edit_text_background_error));
-
-                TextInputLayout inputLayoutPassword = findViewById(R.id.login_edit_text_password_input);
-                inputLayoutPassword.setError("Senha incorrecta");
-                editTextPassword.setBackground(ContextCompat.getDrawable(this, R.drawable.edit_text_background_error));
-            }, 4000);
-        });
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
-    private final TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            buttonEnter.setEnabled(!s.toString().isEmpty());
+
+    @Override
+    protected void onInject() {
+
+
+
+        setStatusBarDark();
+
+        //String user = FirebaseAuth.getInstance().getUid();
+        //if (user != null)
+        //    onUserLogged();
+
+        //LoginDataSource dataSource = new LoginFireDataSource();
+        //presenter = new LoginPresenter(this, dataSource);
+    }
+
+    @Override
+    public void showProgressBar() {
+        buttonEnter.showProgress(true);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        buttonEnter.showProgress(false);
+    }
+
+    @Override
+    public void onFailureForm(String emailError, String passwordError) {
+        if (emailError != null) {
+            inputLayoutEmail.setError(emailError);
+            editTextEmail.setBackground(findDrawable(R.drawable.edit_text_background_error));
         }
+        if (passwordError != null) {
+            inputLayoutPassword.setError(passwordError);
+            editTextPassword.setBackground(findDrawable(R.drawable.edit_text_background_error));
+        }
+    }
 
-        @Override
-        public void afterTextChanged(Editable s) { }
-    };
+    @Override
+    public void onUserLogged() {
+        MainActivity.launch(this, MainActivity.LOGIN_ACTIVITY);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    @OnClick(R.id.login_button_enter)
+    public void onButtonEnterClick() {
+        presenter.login(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+    }
+
+    @OnClick(R.id.login_text_view_register)
+    public void onTextViewRegisterClick() {
+        RegisterActivity.launch(this);
+    }
+
+    @OnTextChanged({R.id.login_edit_text_email, R.id.login_edit_text_password})
+    public void onTextChanged(CharSequence s) {
+        buttonEnter.setEnabled(
+                !editTextEmail.getText().toString().isEmpty() &&
+                        !editTextPassword.getText().toString().isEmpty());
+
+        if (s.hashCode() == editTextEmail.getText().hashCode()) {
+            editTextEmail.setBackground(findDrawable(R.drawable.edit_text_background));
+            inputLayoutEmail.setError(null);
+            inputLayoutEmail.setErrorEnabled(false);
+        } else if (s.hashCode() == editTextPassword.getText().hashCode()) {
+            editTextPassword.setBackground(findDrawable(R.drawable.edit_text_background));
+            inputLayoutPassword.setError(null);
+            inputLayoutPassword.setErrorEnabled(false);
+        }
+    }
+
+    @Override
+    protected int getLayout() {
+        return R.layout.activity_login;
+    }
+
+
+
 }
