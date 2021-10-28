@@ -35,24 +35,24 @@ public abstract class AbstractActivity extends AppCompatActivity implements View
         return Drawables.getDrawable(this, drawableId);
     }
 
-    public int findColor(@ColorRes int colorId) {
-        return CalendarContract.Colors.getColor(this, colorId);
+    @Override
+    public Context getBaseContext() {
+        return super.getBaseContext();
     }
 
-    @Override
-    public Context getContext() {
-        return getBaseContext();
-    }
 
-    @Override
-    public void showProgressBar() {
-    }
 
-    @Override
-    public void hideProgressBar() {
-    }
+    //public int findColor(@ColorRes int colorId) {
+    //    return CalendarContract.Colors.getColor(this, colorId);
+   // }
 
-    @Override
+    //@Override
+    //public Context getContext() {
+    //    return getBaseContext();
+   // }
+
+
+
     public void setStatusBarDark() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -1,6 +1,6 @@
 package com.ngondo.instagram.login.presentation;
 
-import android.view.View;
+import com.ngondo.instagram.common.view.View;
 
 public interface LoginView extends View {
 
