@@ -47,13 +47,7 @@ public class LoginActivity extends AbstractActivity implements LoginView, TextWa
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));
-        }
-
-
+        setStatusBarDark();
     }
 
     @Override
@@ -80,13 +74,18 @@ public class LoginActivity extends AbstractActivity implements LoginView, TextWa
 
     @Override
     public void onUserLogged() {
-        //MainActivity.launch(this, MainActivity.LOGIN_ACTIVITY);
-        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        Intent intent = new Intent((this, MainActivity.class);
+        context.startActivity(intent);
     }
 
     @OnClick(R.id.login_button_enter)
     public void onButtonEnterClick() {
         presenter.login(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+    }
+
+    @OnClick(R.id.login_text_view_register)
+    public void onTextViewRegisterClick() {
+        RegisterActivity.launch(this);
     }
 
 

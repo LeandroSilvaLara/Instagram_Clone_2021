@@ -3,6 +3,7 @@ package com.ngondo.instagram.login.presentation;
 import android.os.Handler;
 
 import com.ngondo.instagram.R;
+import com.ngondo.instagram.common.model.UserAuth;
 import com.ngondo.instagram.common.presenter.Presenter;
 import com.ngondo.instagram.common.utill.Strings;
 import com.ngondo.instagram.login.datasource.LoginDataSource;
@@ -28,8 +29,8 @@ public class LoginPresenter implements Presenter {
     }
 
     @Override
-    public void onSuccess() {
-
+    public void onSuccess(UserAuth userAuth) {
+        view.onUserLogged();
     }
 
     @Override

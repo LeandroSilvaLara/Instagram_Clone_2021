@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,6 +14,11 @@ import android.view.View;
 import com.ngondo.instagram.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static void launch(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivities(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

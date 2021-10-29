@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ngondo.instagram.R;
+import com.ngondo.instagram.common.utill.Colors;
 import com.ngondo.instagram.common.utill.Drawables;
 
 import butterknife.ButterKnife;
@@ -42,9 +43,9 @@ public abstract class AbstractActivity extends AppCompatActivity implements View
 
 
 
-    //public int findColor(@ColorRes int colorId) {
-    //    return CalendarContract.Colors.getColor(this, colorId);
-   // }
+    public int findColor(@ColorRes int colorId) {
+        return Colors.getColor(this, colorId);
+    }
 
     //@Override
     //public Context getContext() {

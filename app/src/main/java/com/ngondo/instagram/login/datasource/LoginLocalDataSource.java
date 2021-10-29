@@ -16,7 +16,18 @@ public class LoginLocalDataSource implements LoginDataSource {
                         presenter.onSuccess(response);
                     }
                 })
-                .addOnFailureListener(new Datab)
+                .addOnFailureListener(new Database.OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        presenter.onError(e.getMessage());
+                    }
+                })
+                .addOnCompleteListener(new Database.OnCompleteListener() {
+                    @Override
+                    public void onComplete() {
+                        presenter.onComplete();
+                    }
+                });
 
     }
 }
