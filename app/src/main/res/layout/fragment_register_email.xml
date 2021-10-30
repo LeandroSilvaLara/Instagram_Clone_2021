@@ -42,7 +42,7 @@
         android:background="@color/grayDarker" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/register_text_view_register"
+        android:id="@+id/register_text_view_email_login"
         style="@style/InstaTextViewBase"
         android:layout_width="match_parent"
         android:gravity="center"
