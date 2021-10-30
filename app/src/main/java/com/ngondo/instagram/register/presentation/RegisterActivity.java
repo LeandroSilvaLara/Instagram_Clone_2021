@@ -23,6 +23,8 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
     }
 
 
+    private RegisterPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,10 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
 
     @Override
     protected void onInject() {
-        RegisterEmailFragment frag = new RegisterEmailFragment();
+        presenter = new RegisterPresenter();
+
+
+        RegisterEmailFragment frag = new RegisterEmailFragment.newInstance(presenter);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 

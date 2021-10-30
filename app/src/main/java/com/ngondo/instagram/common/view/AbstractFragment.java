@@ -18,7 +18,9 @@ import com.ngondo.instagram.common.utill.Drawables;
 
 import butterknife.ButterKnife;
 
-public abstract class AbstractFragment extends Fragment implements com.ngondo.instagram.common.view.View {
+public abstract class AbstractFragment<P> extends Fragment implements com.ngondo.instagram.common.view.View {
+
+    protected P presenter;
 
     @Nullable
     @Override
@@ -54,6 +56,10 @@ public abstract class AbstractFragment extends Fragment implements com.ngondo.in
 
     public int findColor(@ColorRes int colorId) {
         return Colors.getColor(getContext(), colorId);
+    }
+
+    public void setPresenter(P presenter) {
+        this.presenter = presenter;
     }
 
     protected abstract @LayoutRes int getLayout();
