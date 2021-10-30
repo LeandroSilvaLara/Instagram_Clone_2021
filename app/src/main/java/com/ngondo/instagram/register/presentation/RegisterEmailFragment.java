@@ -59,9 +59,6 @@ public class RegisterEmailFragment extends AbstractFragment<RegisterPresenter> i
         editTextEmail.setBackground(findDrawable(R.drawable.edit_text_background_error));
     }
 
-    @Override
-    public void showNextView() {
-    }
 
     @OnClick(R.id.register_text_view_email_login)
     public void onTextViewLoginClick() {
@@ -71,6 +68,7 @@ public class RegisterEmailFragment extends AbstractFragment<RegisterPresenter> i
 
     @OnClick(R.id.register_button_next)
     public void onButtonNextClick(){
+        presenter.setEmail(editTextEmail.getText().toString());
     }
 
     @OnTextChanged(R.id.register_edit_text_email)

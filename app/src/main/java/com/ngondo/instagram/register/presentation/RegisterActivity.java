@@ -2,6 +2,7 @@ package com.ngondo.instagram.register.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -34,13 +35,32 @@ public class RegisterActivity extends AbstractActivity implements RegisterView {
     @Override
     protected void onInject() {
         presenter = new RegisterPresenter();
+        presenter.setRegisterView(this);
+
+        showNextView(RegisterSteps.EMAIL);
 
 
-        RegisterEmailFragment frag = new RegisterEmailFragment.newInstance(presenter);
+    }
+
+    @Override
+    public void showNextView(RegisterSteps step) {
+        Fragment frag = RegisterEmailFragment.newInstance(presenter);
+        switch (step) {
+            case EMAIL:
+                break;
+            case NAME_PASSWORD:
+                frag = RegisterNamePasswordFragment.newInstance(presenter);
+                break;
+        }
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
-        transaction.add(R.id.register_fragment, frag, "fragmente1");
+        if (manager.findFragmentById(R.id.register_fragment) == null){
+        transaction.add(R.id.register_fragment, frag, step.name());
+        } else {
+            transaction.replace(R.id.register_fragment, frag, step.name());
+            transaction.addToBackStack(step.name());
+        }
 
         transaction.commit();
     }
