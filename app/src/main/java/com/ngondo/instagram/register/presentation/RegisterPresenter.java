@@ -1,17 +1,27 @@
 package com.ngondo.instagram.register.presentation;
 
 import com.ngondo.instagram.R;
+import com.ngondo.instagram.common.model.UserAuth;
+import com.ngondo.instagram.common.presenter.Presenter;
 import com.ngondo.instagram.common.utill.Strings;
+import com.ngondo.instagram.register.datasource.RegisterDataSource;
 
-public class RegisterPresenter {
+public class RegisterPresenter implements Presenter {
 
     private RegisterView registerview;
     private RegisterView.EmailView emailView;
     private RegisterView.NamePasswordView namePasswordView;
 
+    private final RegisterDataSource dataSource;
+
+
     private String email;
     private String name;
     private String password;
+
+    public RegisterPresenter(RegisterDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public void setRegisterView(RegisterView registerView) {
         this.registerview = registerView;
@@ -42,5 +52,36 @@ public class RegisterPresenter {
         }
         this.name = name;
         this.password = password;
+
+        namePasswordView.showProgressBar();
+        dataSource.createUser(this.name, this.email, this.password, this);
     }
+
+     public String getName() {
+        return name;
+     }
+
+    public void showPhotoView() {
+        registerview.showNextView(RegisterSteps.PHOTO);
+    }
+
+    public void jumpRegistration() {
+        registerview.onUserCreated();
+    }
+
+    @Override
+    public void onSuccess(UserAuth response) {
+        registerview.showNextView(RegisterSteps.WELCOME);
+    }
+
+    @Override
+    public void onError(String message) {
+        namePasswordView.onFailureCreateUser(message);
+    }
+
+    @Override
+    public void onComplete() {
+        namePasswordView.hideProgressBar();
+    }
+
 }

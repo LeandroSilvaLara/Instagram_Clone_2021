@@ -1,5 +1,11 @@
 package com.ngondo.instagram.common.model;
 
+import android.net.Uri;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 public class Database {
 
 
